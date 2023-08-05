@@ -135,6 +135,12 @@ Here you can put your change to keep a trace of your work and decisions.
 
 * First init of this role with the bootstrap_role playbook by Lord Robin Crombez
 
+### 2023-08-05: Added Clustering and SSL/TLS
+
+* Role handle SSL/TLS
+* Role doest not handle password hashing for now
+* Role chandle clustering Prometheus and local scraping
+
 ## Authors
 
 * Lord Robin Crombez
@@ -143,3 +149,6 @@ Here you can put your change to keep a trace of your work and decisions.
 
 * [Ansible role documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html)
 * [Ansible Molecule documentation](https://molecule.readthedocs.io/)
+* [GETTING STARTED PROMETHEUS](https://prometheus.io/docs/prometheus/latest/getting_started/)
+* [How To Install Prometheus on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-install-prometheus-on-ubuntu-16-04)
+* [Password file generator for Prometheus](https://o11y.tools/pwgen/)

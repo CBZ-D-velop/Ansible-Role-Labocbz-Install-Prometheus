@@ -1,1 +1,4 @@
 ---
+inv_prepare_host_users:
+  - login: "root"
+    group: "prometheus"

@@ -1,0 +1,31 @@
+##############################
+#                            #
+# Ansible / Tower managed on #
+#                            #
+##############################
+
+[Unit]
+Description=Prometheus Server
+Documentation=https://prometheus.io/docs/introduction/overview/
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User={{ install_prometheus_user }}
+Group={{ install_prometheus_group }}
+Type=simple
+ExecStart=/bin/sh -c '/usr/bin/prometheus \
+    --config.file {{ install_prometheus_config_path }}/prometheus.yml \
+    --storage.tsdb.path /var/lib/prometheus/ \
+    --web.console.templates={{ install_prometheus_config_path }}/consoles \
+    --web.console.libraries={{ install_prometheus_config_path }}/console_libraries \
+    --web.listen-address="{{ install_prometheus_host }}:{{ install_prometheus_port }}" \
+{% if (install_prometheus_ssl | default(false)) or (install_prometheus_basic_auth | default(false)) %}
+    --web.config.file={{ install_prometheus_config_path }}/web-config.yml \
+{% endif %}
+    --log.level={{ install_prometheus_loglevel }}'
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
