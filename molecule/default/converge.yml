@@ -12,5 +12,22 @@
     - name: "Include labocbz.install_prometheus"
       tags:
         - "labocbz.install_prometheus"
+      vars:
+        install_prometheus_port: "{{ inv_install_prometheus_port }}"
+        install_prometheus_host: "{{ inv_install_prometheus_host }}"
+        install_prometheus_ssl_path: "{{ inv_install_prometheus_ssl_path }}"
+        install_prometheus_scrape_interval: "{{ inv_install_prometheus_scrape_interval }}"
+        install_prometheus_evaluation_interval: "{{ inv_install_prometheus_evaluation_interval }}"
+        install_prometheus_loglevel: "{{ inv_install_prometheus_loglevel }}"
+        install_prometheus_ssl: "{{ inv_install_prometheus_ssl }}"
+        install_prometheus_ssl_key: "{{ inv_install_prometheus_ssl_key }}"
+        install_prometheus_ssl_crt: "{{ inv_install_prometheus_ssl_crt }}"
+        install_prometheus_ssl_ca: "{{ inv_install_prometheus_ssl_ca }}"
+        install_prometheus_basic_auth: "{{ inv_install_prometheus_basic_auth }}"
+        install_prometheus_basic_auth_login: "{{ inv_install_prometheus_basic_auth_login }}"
+        install_prometheus_basic_auth_password: "{{ inv_install_prometheus_basic_auth_password }}"
+        install_prometheus_basic_auth_password_hash: "{{ inv_install_prometheus_basic_auth_password_hash }}"
+        install_prometheus_instancename: "{{ inv_install_prometheus_clustername }}"
+        install_prometheus_federate_collector_interval: "{{ inv_install_prometheus_federate_collector_interval }}"
       ansible.builtin.include_role:
         name: "labocbz.install_prometheus"

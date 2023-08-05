@@ -1,14 +1,11 @@
 ---
 install_prometheus_config_path: "/etc/prometheus"
 install_prometheus_port: "9090"
-
 install_prometheus_host: "0.0.0.0"
-install_prometheus_scrapes_path: "{{ install_prometheus_config_path }}/scrape.d"
 
 install_prometheus_ssl_path: "{{ install_prometheus_config_path }}/ssl"
-install_prometheus_scrape_interval: "15s"
-install_prometheus_evaluation_interval: "15s"
-install_prometheus_federate_interval: "15s"
+install_prometheus_scrape_interval: "10s"
+install_prometheus_evaluation_interval: "10s"
 install_prometheus_loglevel: "debug"
 
 install_prometheus_ssl: true
@@ -20,6 +17,15 @@ install_prometheus_basic_auth: true
 install_prometheus_basic_auth_login: "admin"
 install_prometheus_basic_auth_password: "admin"
 install_prometheus_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hGkkNOcxLtLRWV6nfSZWfonGb69W"
+
+install_prometheus_clustername: "my-prometheus-cluster.domain.tld"
+install_prometheus_instancename: "prom-1"
+
+install_prometheus_federate_collector_hosts:
+  - "my.prom.instance.domain.tld:9090"
+
+install_prometheus_federate_collector: false
+install_prometheus_federate_collector_interval: "5s"
 
 install_prometheus_group: "prometheus"
 install_prometheus_user: "prometheus"

@@ -2,3 +2,27 @@
 inv_prepare_host_users:
   - login: "root"
     group: "prometheus"
+
+inv_install_prometheus_config_path: "/etc/prometheus"
+inv_install_prometheus_port: "9090"
+inv_install_prometheus_host: "0.0.0.0"
+
+inv_install_prometheus_ssl_path: "{{ inv_install_prometheus_config_path }}/ssl"
+inv_install_prometheus_scrape_interval: "10s"
+inv_install_prometheus_evaluation_interval: "10s"
+inv_install_prometheus_loglevel: "debug"
+
+inv_install_prometheus_ssl: true
+inv_install_prometheus_ssl_key: "{{ inv_install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/my-prometheus-cluster.domain.tld.pem.key"
+inv_install_prometheus_ssl_crt: "{{ inv_install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/my-prometheus-cluster.domain.tld.pem.crt"
+inv_install_prometheus_ssl_ca: "{{ inv_install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
+
+inv_install_prometheus_basic_auth: true
+inv_install_prometheus_basic_auth_login: "admin"
+inv_install_prometheus_basic_auth_password: "admin"
+inv_install_prometheus_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hGkkNOcxLtLRWV6nfSZWfonGb69W"
+
+inv_install_prometheus_clustername: "my-prometheus-cluster.domain.tld"
+inv_install_prometheus_instancename: "prom-1"
+
+inv_install_prometheus_federate_collector_interval: "5s"

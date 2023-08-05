@@ -8,6 +8,9 @@ global:
   scrape_interval: "{{ install_prometheus_scrape_interval }}" # Set the scrape interval to every 15 seconds. Default is every 1 minute.
   evaluation_interval: "{{ install_prometheus_evaluation_interval }}" # Evaluate rules every 15 seconds. The default is every 1 minute.
   # scrape_timeout is set to the global default (10s).
+  external_labels:
+    cluster: "{{ install_prometheus_clustername }}"
+    instance: "{{ install_prometheus_instancename }}"
 
 # Alertmanager configuration
 alerting:
@@ -41,18 +44,17 @@ scrape_configs:
     static_configs:
       - targets: ["{{ inventory_hostname }}:{{ install_prometheus_port }}"]
 
-{% if ansible_play_hosts | length > 1 %}
+{% if install_prometheus_federate_collector | default(false) %}
   - job_name: "Cluster-Federate"
-    scrape_interval: "{{ install_prometheus_federate_interval }}"
+    scrape_interval: "{{ install_prometheus_federate_collector_interval }}"
     honor_labels: true
     metrics_path: "/federate"
     params:
       "match[]":
-        - "{job='Local-Prometheus'}"
-        - "{__name__=~'job:.*'}"
+        - "{job='*'}"
     static_configs:
       - targets: 
-{% for host in ansible_play_hosts %}
+{% for host in install_prometheus_federate_collector_hosts %}
         - "{{ host }}:{{ install_prometheus_port}}"
 {% endfor %}
 {% if install_prometheus_ssl | default(false) %}
