@@ -34,7 +34,7 @@
           ansible.builtin.uri:
             url: "http://{{ inventory_hostname }}:{{ inv_install_prometheus_port }}"
             method: GET
-            user: "{{ inv_install_prometheus_basic_auth_login}}"
+            user: "{{ inv_install_prometheus_basic_auth_login }}"
             password: "{{ inv_install_prometheus_basic_auth_password }}"
             headers:
               Content-Type: "application/json"
@@ -64,7 +64,7 @@
           ansible.builtin.uri:
             url: "https://{{ inventory_hostname }}:{{ inv_install_prometheus_port }}"
             method: GET
-            user: "{{ inv_install_prometheus_basic_auth_login}}"
+            user: "{{ inv_install_prometheus_basic_auth_login }}"
             password: "{{ inv_install_prometheus_basic_auth_password }}"
             headers:
               Content-Type: "application/json"
