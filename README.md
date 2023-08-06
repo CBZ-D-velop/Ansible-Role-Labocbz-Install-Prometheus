@@ -5,14 +5,25 @@
 ![Testing Method](https://img.shields.io/badge/Testing%20Method-Ansible%20Molecule-blueviolet)
 ![Testing Driver](https://img.shields.io/badge/Testing%20Driver-docker-blueviolet)
 ![Language Status](https://img.shields.io/badge/language-Ansible-red)
-![Compagny](https://img.shields.io/badge/Compagny-CBZ--Dvelop%2FLabo--CBZ-blue)
+![Compagny](https://img.shields.io/badge/Compagny-Labo--CBZ-blue)
 ![Author](https://img.shields.io/badge/Author-Lord%20Robin%20Crombez-blue)
 
 ## Description
 
 ![Tag: UNIX](https://img.shields.io/badge/Tech-UNIX-orange)
+![Tag: Ansible](https://img.shields.io/badge/Tech-Ansible-orange)
+![Tag: Debian](https://img.shields.io/badge/Tech-Debian-orange)
+![Tag: Prometheus](https://img.shields.io/badge/Tech-Prometheus-orange)
+![Tag: Standalone](https://img.shields.io/badge/Tech-Standalone-orange)
+![Tag: Cluster](https://img.shields.io/badge/Tech-Cluster-orange)
+![Tag: SSL/TLS](https://img.shields.io/badge/Tech-SSL%2TLS-orange)
+![Tag: Federation](https://img.shields.io/badge/Tech-Federation-orange)
 
-This is a limited description for the meta.
+An Ansible role to install and configure Prometheus on your host.
+
+The offered Ansible role streamlines the installation and configuration of Prometheus, a powerful monitoring solution. It simplifies the Prometheus setup process, encompassing SSL/TLS security, basic authentication, and the ability to establish federation for data scraping. This role not only facilitates the deployment of Prometheus instances but also empowers you to create a cohesive monitoring network.
+
+Whether you're orchestrating monitoring across clusters or enabling data retrieval between instances, this role ensures straightforward configuration, guaranteeing seamless and secure data collection. This is especially beneficial for scenarios like extracting insights from various data centers or setting up instances to recover data from remote nodes. In essence, the role provides a comprehensive toolset to enhance your infrastructure monitoring effortlessly.
 
 ## Folder structure
 
