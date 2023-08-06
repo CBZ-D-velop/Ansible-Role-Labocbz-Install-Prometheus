@@ -1,1 +1,18 @@
 ---
+- name: "Enable and start Prometheus"
+  register: install_prometheus_service_status
+  changed_when: not install_prometheus_service_status.state != "started"
+  ansible.builtin.service:
+    name: "prometheus"
+    state: "started"
+    daemon_reload: true
+    enabled: yes
+
+- name: "Restart Prometheus"
+  register: install_prometheus_service_status
+  changed_when: not install_prometheus_service_status.state != "restarted"
+  ansible.builtin.service:
+    name: "prometheus"
+    state: "restarted"
+    daemon_reload: true
+    enabled: yes

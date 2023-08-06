@@ -1,2 +1,11 @@
 ---
 ansible_ssh_port: 22
+
+install_prometheus_instancename: "prom-1"
+
+install_prometheus_federate_collector_hosts:
+  - "molecule-local-instance-2-install-prometheus"
+  - "molecule-local-instance-3-install-prometheus"
+  - "molecule-local-instance-4-install-prometheus"
+
+install_prometheus_federate_collector: true

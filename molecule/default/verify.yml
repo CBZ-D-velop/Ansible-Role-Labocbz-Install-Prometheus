@@ -5,3 +5,69 @@
   hosts: "all"
   gather_facts: false
   tasks:
+
+    - name: "Get Prometheus service current state"
+      register: inv_install_prometheus_service_status
+      failed_when: not inv_install_prometheus_service_status.status.ActiveState == 'active'
+      ansible.builtin.systemd:
+        name: "prometheus"
+
+    - name: "Check endpoint on HTTP"
+      when: not (inv_install_prometheus_ssl | default(false))
+      block:
+        - name: "Check Prometheus web UI HTTPS / no Auth"
+          when: not (inv_install_prometheus_basic_auth | default(false))
+          register: prometheus_infos
+          failed_when: prometheus_infos.status != 200
+          changed_when: prometheus_infos.status != 200
+          ansible.builtin.uri:
+            url: "http://{{ inventory_hostname }}:{{ inv_install_prometheus_port }}"
+            method: GET
+            headers:
+              Content-Type: "application/json"
+
+        - name: "Check Prometheus web UI HTTPS / Auth"
+          when: inv_install_prometheus_basic_auth | default(false)
+          register: prometheus_infos
+          failed_when: prometheus_infos.status != 200
+          changed_when: prometheus_infos.status != 200
+          ansible.builtin.uri:
+            url: "http://{{ inventory_hostname }}:{{ inv_install_prometheus_port }}"
+            method: GET
+            user: "{{ inv_install_prometheus_basic_auth_login }}"
+            password: "{{ inv_install_prometheus_basic_auth_password }}"
+            headers:
+              Content-Type: "application/json"
+            #client_cert: "{{ inv_inv_install_elasticsearch_ssl_crt }}"
+            #client_key: "{{ inv_inv_install_elasticsearch_ssl_key }}"
+            force_basic_auth: yes
+
+    - name: "Check endpoint on HTTPS"
+      when: inv_install_prometheus_ssl | default(false)
+      block:
+        - name: "Check Prometheus web UI HTTPS / no Auth"
+          when: not (inv_install_prometheus_basic_auth | default(false))
+          register: prometheus_infos
+          failed_when: prometheus_infos.status != 200
+          changed_when: prometheus_infos.status != 200
+          ansible.builtin.uri:
+            url: "https://{{ inventory_hostname }}:{{ inv_install_prometheus_port }}"
+            method: GET
+            headers:
+              Content-Type: "application/json"
+
+        - name: "Check Prometheus web UI HTTPS / Auth"
+          when: inv_install_prometheus_basic_auth | default(false)
+          register: prometheus_infos
+          failed_when: prometheus_infos.status != 200
+          changed_when: prometheus_infos.status != 200
+          ansible.builtin.uri:
+            url: "https://{{ inventory_hostname }}:{{ inv_install_prometheus_port }}"
+            method: GET
+            user: "{{ inv_install_prometheus_basic_auth_login }}"
+            password: "{{ inv_install_prometheus_basic_auth_password }}"
+            headers:
+              Content-Type: "application/json"
+            #client_cert: "{{ inv_inv_install_elasticsearch_ssl_crt }}"
+            #client_key: "{{ inv_inv_install_elasticsearch_ssl_key }}"
+            force_basic_auth: yes

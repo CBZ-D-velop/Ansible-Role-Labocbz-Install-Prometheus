@@ -1,1 +1,42 @@
 ---
+install_prometheus_config_path: "/etc/prometheus"
+install_prometheus_port: "9090"
+install_prometheus_host: "0.0.0.0"
+
+install_prometheus_ssl_path: "{{ install_prometheus_config_path }}/ssl"
+install_prometheus_scrape_interval: "10s"
+install_prometheus_evaluation_interval: "10s"
+install_prometheus_loglevel: "debug"
+
+install_prometheus_ssl: true
+install_prometheus_ssl_key: "{{ install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/my-prometheus-cluster.domain.tld.pem.key"
+install_prometheus_ssl_crt: "{{ install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/my-prometheus-cluster.domain.tld.pem.crt"
+install_prometheus_ssl_ca: "{{ install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
+
+install_prometheus_basic_auth: true
+install_prometheus_basic_auth_login: "admin"
+install_prometheus_basic_auth_password: "admin"
+install_prometheus_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hGkkNOcxLtLRWV6nfSZWfonGb69W"
+
+install_prometheus_clustername: "my-prometheus-cluster.domain.tld"
+install_prometheus_instancename: "prom-1"
+
+install_prometheus_federate_collector_hosts:
+  - "my.federate-prom.instance.domain.tld:{{ install_prometheus_port }}"
+
+install_prometheus_federate_collector: false
+install_prometheus_federate_collector_interval: "5s"
+
+install_prometheus_jobs:
+  - name: "My Prom instances"
+    basic_auth: true
+    basic_auth_login: "admin"
+    basic_auth_password: "admin"
+    ssl: true
+    targets:
+      - "my.prom-1.instance.domain.tld:{{ install_prometheus_port }}"
+      - "my.prom-2.instance.domain.tld:{{ install_prometheus_port }}"
+      - "my.prom-3.instance.domain.tld:{{ install_prometheus_port }}"
+
+install_prometheus_group: "prometheus"
+install_prometheus_user: "prometheus"

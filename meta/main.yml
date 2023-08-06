@@ -2,8 +2,8 @@ galaxy_info:
   author: "Lord Robin Crombez"
   namespace: "labocbz"
   role_name: "install_prometheus"
-  description: "This is a limited description for the meta."
-  company: "CBZ-Dvelop/Labo-CBZ"
+  description: "An Ansible role to install and configure Prometheus on your host"
+  company: "Labo-CBZ"
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value

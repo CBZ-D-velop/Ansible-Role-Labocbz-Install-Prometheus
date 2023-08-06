@@ -1,0 +1,102 @@
+##############################
+#                            #
+# Ansible / Tower managed on #
+#                            #
+##############################
+
+global:
+  scrape_interval: "{{ install_prometheus_scrape_interval }}" # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: "{{ install_prometheus_evaluation_interval }}" # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+  external_labels:
+    cluster: "{{ install_prometheus_clustername }}"
+    instance: "{{ install_prometheus_instancename }}"
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global "evaluation_interval".
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it"s Prometheus itself.
+scrape_configs:
+
+#
+# Local Job
+#
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "Local-Prometheus"
+{% if install_prometheus_ssl | default(false) %}
+    scheme: "https"
+    tls_config:
+      ca_file: "{{ install_prometheus_ssl_ca }}"
+{% endif %}
+{% if install_prometheus_basic_auth | default(false) %}
+    basic_auth:
+      username: "{{ install_prometheus_basic_auth_login }}"
+      password: "{{ install_prometheus_basic_auth_password }}"
+{% endif %}
+    # metrics_path defaults to "/metrics"
+    # scheme defaults to "http".
+    static_configs:
+      - targets: ["{{ inventory_hostname }}:{{ install_prometheus_port }}"]
+
+#
+# Federation Job
+#
+{% if install_prometheus_federate_collector | default(false) %}
+  - job_name: "Cluster-Federate"
+    scrape_interval: "{{ install_prometheus_federate_collector_interval }}"
+    honor_labels: true
+    metrics_path: "/federate"
+    params:
+      "match[]":
+        - "{job='*'}"
+    static_configs:
+      - targets: 
+{% for host in install_prometheus_federate_collector_hosts %}
+        - "{{ host }}:{{ install_prometheus_port}}"
+{% endfor %}
+{% if install_prometheus_ssl | default(false) %}
+    scheme: "https"
+    tls_config:
+      ca_file: "{{ install_prometheus_ssl_ca }}"
+{% endif %}
+{% if install_prometheus_basic_auth | default(false) %}
+    basic_auth:
+      username: "{{ install_prometheus_basic_auth_login }}"
+      password: "{{ install_prometheus_basic_auth_password }}"
+{% endif %}
+{% endif %}
+
+#
+# Scrap Jobs
+#
+{% for job in install_prometheus_jobs %}
+  - job_name: "{{ job.name }}"
+    honor_labels: true
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: 
+{% for host in job.targets %}
+        - "{{ host }}"
+{% endfor %}
+{% if job.ssl | default(false) %}
+    scheme: "https"
+    tls_config:
+      ca_file: "{{ install_prometheus_ssl_ca }}"
+{% endif %}
+{% if job.basic_auth | default(false) %}
+    basic_auth:
+      username: "{{ job.basic_auth_login }}"
+      password: "{{ job.basic_auth_password }}"
+{% endif %}
+  #
+{% endfor %}
