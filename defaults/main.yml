@@ -22,10 +22,21 @@ install_prometheus_clustername: "my-prometheus-cluster.domain.tld"
 install_prometheus_instancename: "prom-1"
 
 install_prometheus_federate_collector_hosts:
-  - "my.prom.instance.domain.tld:9090"
+  - "my.federate-prom.instance.domain.tld:{{ install_prometheus_port }}"
 
 install_prometheus_federate_collector: false
 install_prometheus_federate_collector_interval: "5s"
+
+install_prometheus_jobs:
+  - name: "My Prom instances"
+    basic_auth: true
+    basic_auth_login: "admin"
+    basic_auth_password: "admin"
+    ssl: true
+    targets:
+      - "my.prom-1.instance.domain.tld:{{ install_prometheus_port }}"
+      - "my.prom-2.instance.domain.tld:{{ install_prometheus_port }}"
+      - "my.prom-3.instance.domain.tld:{{ install_prometheus_port }}"
 
 install_prometheus_group: "prometheus"
 install_prometheus_user: "prometheus"

@@ -136,6 +136,17 @@ install_prometheus_federate_collector_hosts:
 install_prometheus_federate_collector: false
 install_prometheus_federate_collector_interval: "5s"
 
+install_prometheus_jobs:
+  - name: "My Prom instances"
+    basic_auth: true
+    basic_auth_login: "admin"
+    basic_auth_password: "admin"
+    ssl: true
+    targets:
+      - "my.prom-1.instance.domain.tld:{{ install_prometheus_port }}"
+      - "my.prom-2.instance.domain.tld:{{ install_prometheus_port }}"
+      - "my.prom-3.instance.domain.tld:{{ install_prometheus_port }}"
+
 install_prometheus_group: "prometheus"
 install_prometheus_user: "prometheus"
 
@@ -159,8 +170,8 @@ inv_install_prometheus_port: "9090"
 inv_install_prometheus_host: "0.0.0.0"
 
 inv_install_prometheus_ssl_path: "{{ inv_install_prometheus_config_path }}/ssl"
-inv_install_prometheus_scrape_interval: "10s"
-inv_install_prometheus_evaluation_interval: "10s"
+inv_install_prometheus_scrape_interval: "5s"
+inv_install_prometheus_evaluation_interval: "1s"
 inv_install_prometheus_loglevel: "debug"
 
 inv_install_prometheus_ssl: true
@@ -176,7 +187,40 @@ inv_install_prometheus_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuM
 inv_install_prometheus_clustername: "my-prometheus-cluster.domain.tld"
 inv_install_prometheus_instancename: "prom-1"
 
-inv_install_prometheus_federate_collector_interval: "5s"
+inv_install_prometheus_federate_collector_interval: "15s"
+
+inv_install_prometheus_jobs:
+  - name: "My Molecule instances (on SSL + Auth)"
+    basic_auth: true
+    basic_auth_login: "admin"
+    basic_auth_password: "admin"
+    ssl: true
+    targets:
+      - "molecule-local-instance-2-install-prometheus:{{ inv_install_prometheus_port }}"
+      - "molecule-local-instance-3-install-prometheus:{{ inv_install_prometheus_port }}"
+      - "molecule-local-instance-4-install-prometheus:{{ inv_install_prometheus_port }}"
+
+  - name: "My Molecule instances (on SSL)"
+    ssl: true
+    targets:
+      - "molecule-local-instance-2-install-prometheus:{{ inv_install_prometheus_port }}"
+      - "molecule-local-instance-3-install-prometheus:{{ inv_install_prometheus_port }}"
+      - "molecule-local-instance-4-install-prometheus:{{ inv_install_prometheus_port }}"
+
+  - name: "My Molecule instances (on Auth)"
+    basic_auth: true
+    basic_auth_login: "admin"
+    basic_auth_password: "admin"
+    targets:
+      - "molecule-local-instance-2-install-prometheus:{{ inv_install_prometheus_port }}"
+      - "molecule-local-instance-3-install-prometheus:{{ inv_install_prometheus_port }}"
+      - "molecule-local-instance-4-install-prometheus:{{ inv_install_prometheus_port }}"
+
+  - name: "My Molecule instances"
+    targets:
+      - "molecule-local-instance-2-install-prometheus:{{ inv_install_prometheus_port }}"
+      - "molecule-local-instance-3-install-prometheus:{{ inv_install_prometheus_port }}"
+      - "molecule-local-instance-4-install-prometheus:{{ inv_install_prometheus_port }}"
 
 # From SCRAPER / Cluster / Federator
 ---
@@ -203,28 +247,29 @@ all vars from to put/from AWX / Tower
 To run this role, you can copy the molecule/default/converge.yml playbook and add it into your playbook:
 
 ```YAML
-    - name: "Include labocbz.install_prometheus"
-      tags:
-        - "labocbz.install_prometheus"
-      vars:
-        install_prometheus_port: "{{ inv_install_prometheus_port }}"
-        install_prometheus_host: "{{ inv_install_prometheus_host }}"
-        install_prometheus_ssl_path: "{{ inv_install_prometheus_ssl_path }}"
-        install_prometheus_scrape_interval: "{{ inv_install_prometheus_scrape_interval }}"
-        install_prometheus_evaluation_interval: "{{ inv_install_prometheus_evaluation_interval }}"
-        install_prometheus_loglevel: "{{ inv_install_prometheus_loglevel }}"
-        install_prometheus_ssl: "{{ inv_install_prometheus_ssl }}"
-        install_prometheus_ssl_key: "{{ inv_install_prometheus_ssl_key }}"
-        install_prometheus_ssl_crt: "{{ inv_install_prometheus_ssl_crt }}"
-        install_prometheus_ssl_ca: "{{ inv_install_prometheus_ssl_ca }}"
-        install_prometheus_basic_auth: "{{ inv_install_prometheus_basic_auth }}"
-        install_prometheus_basic_auth_login: "{{ inv_install_prometheus_basic_auth_login }}"
-        install_prometheus_basic_auth_password: "{{ inv_install_prometheus_basic_auth_password }}"
-        install_prometheus_basic_auth_password_hash: "{{ inv_install_prometheus_basic_auth_password_hash }}"
-        install_prometheus_instancename: "{{ inv_install_prometheus_clustername }}"
-        install_prometheus_federate_collector_interval: "{{ inv_install_prometheus_federate_collector_interval }}"
-      ansible.builtin.include_role:
-        name: "labocbz.install_prometheus"
+- name: "Include labocbz.install_prometheus"
+  tags:
+    - "labocbz.install_prometheus"
+  vars:
+    install_prometheus_port: "{{ inv_install_prometheus_port }}"
+    install_prometheus_host: "{{ inv_install_prometheus_host }}"
+    install_prometheus_ssl_path: "{{ inv_install_prometheus_ssl_path }}"
+    install_prometheus_scrape_interval: "{{ inv_install_prometheus_scrape_interval }}"
+    install_prometheus_evaluation_interval: "{{ inv_install_prometheus_evaluation_interval }}"
+    install_prometheus_loglevel: "{{ inv_install_prometheus_loglevel }}"
+    install_prometheus_ssl: "{{ inv_install_prometheus_ssl }}"
+    install_prometheus_ssl_key: "{{ inv_install_prometheus_ssl_key }}"
+    install_prometheus_ssl_crt: "{{ inv_install_prometheus_ssl_crt }}"
+    install_prometheus_ssl_ca: "{{ inv_install_prometheus_ssl_ca }}"
+    install_prometheus_basic_auth: "{{ inv_install_prometheus_basic_auth }}"
+    install_prometheus_basic_auth_login: "{{ inv_install_prometheus_basic_auth_login }}"
+    install_prometheus_basic_auth_password: "{{ inv_install_prometheus_basic_auth_password }}"
+    install_prometheus_basic_auth_password_hash: "{{ inv_install_prometheus_basic_auth_password_hash }}"
+    install_prometheus_instancename: "{{ inv_install_prometheus_clustername }}"
+    install_prometheus_federate_collector_interval: "{{ inv_install_prometheus_federate_collector_interval }}"
+    install_prometheus_jobs: "{{ inv_install_prometheus_jobs }}"
+  ansible.builtin.include_role:
+    name: "labocbz.install_prometheus"
 ```
 
 ## Architectural Decisions Records
@@ -246,6 +291,12 @@ Here you can put your change to keep a trace of your work and decisions.
 * Role handler clustering AND external federation
 * Added testing
 * Added a validation task at the end of templating, so service dont restart if YAML is not good
+
+### 2023-08-05-c: Scraps Jobs
+
+* You can now define your jobs in the role
+* Role handle job on SSL/TLS
+* Job can use Basic Auth to
 
 ## Authors
 
