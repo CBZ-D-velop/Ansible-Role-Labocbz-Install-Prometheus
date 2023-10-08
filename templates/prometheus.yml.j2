@@ -62,7 +62,7 @@ scrape_configs:
     static_configs:
       - targets: 
 {% for host in install_prometheus_federate_collector_hosts %}
-        - "{{ host }}:{{ install_prometheus_port}}"
+        - "{{ host }}:{{ install_prometheus_port }}"
 {% endfor %}
 {% if install_prometheus_ssl | default(false) %}
     scheme: "https"
