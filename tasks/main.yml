@@ -4,7 +4,7 @@
   block:
     - name: "Install packages"
       ansible.builtin.package:
-        update_cache: false
+        update_cache: true
         name:
           - "prometheus"
 
