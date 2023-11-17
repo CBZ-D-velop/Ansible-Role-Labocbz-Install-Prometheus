@@ -20,6 +20,7 @@ install_prometheus_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hG
 
 install_prometheus_clustername: "my-prometheus-cluster.domain.tld"
 install_prometheus_instancename: "prom-1"
+install_prometheus_retention_time: "1y"
 
 install_prometheus_federate_collector_hosts:
   - "my.federate-prom.instance.domain.tld:{{ install_prometheus_port }}"

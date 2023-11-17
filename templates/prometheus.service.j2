@@ -20,6 +20,7 @@ ExecStart=/bin/sh -c '/usr/bin/prometheus \
     --web.console.templates={{ install_prometheus_config_path }}/consoles \
     --web.console.libraries={{ install_prometheus_config_path }}/console_libraries \
     --web.listen-address="{{ install_prometheus_host }}:{{ install_prometheus_port }}" \
+    --storage.tsdb.retention.time={{ install_prometheus_retention_time }} \
 {% if (install_prometheus_ssl | default(false)) or (install_prometheus_basic_auth | default(false)) %}
     --web.config.file={{ install_prometheus_config_path }}/web-config.yml \
 {% endif %}

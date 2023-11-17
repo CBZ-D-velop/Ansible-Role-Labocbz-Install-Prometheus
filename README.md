@@ -129,6 +129,7 @@ install_prometheus_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hG
 
 install_prometheus_clustername: "my-prometheus-cluster.domain.tld"
 install_prometheus_instancename: "prom-1"
+install_prometheus_retention_time: "1y"
 
 install_prometheus_federate_collector_hosts:
   - "my.prom.instance.domain.tld:9090"
@@ -186,6 +187,7 @@ inv_install_prometheus_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuM
 
 inv_install_prometheus_clustername: "my-prometheus-cluster.domain.tld"
 inv_install_prometheus_instancename: "prom-1"
+inv_install_prometheus_retention_time: "1y"
 
 inv_install_prometheus_federate_collector_interval: "15s"
 
@@ -265,7 +267,9 @@ To run this role, you can copy the molecule/default/converge.yml playbook and ad
     install_prometheus_basic_auth_login: "{{ inv_install_prometheus_basic_auth_login }}"
     install_prometheus_basic_auth_password: "{{ inv_install_prometheus_basic_auth_password }}"
     install_prometheus_basic_auth_password_hash: "{{ inv_install_prometheus_basic_auth_password_hash }}"
-    install_prometheus_instancename: "{{ inv_install_prometheus_clustername }}"
+    install_prometheus_instancename: "{{ inv_install_prometheus_instancename }}"
+    install_prometheus_clustername: "{{ inv_install_prometheus_clustername }}"
+    install_prometheus_retention_time: "{{ inv_install_prometheus_retention_time }}"
     install_prometheus_federate_collector_interval: "{{ inv_install_prometheus_federate_collector_interval }}"
     install_prometheus_jobs: "{{ inv_install_prometheus_jobs }}"
   ansible.builtin.include_role:
@@ -304,6 +308,11 @@ Here you can put your change to keep a trace of your work and decisions.
 * Molecule now use remote Docker image by Lord Robin Crombez
 * Molecule now use custom Docker image in CI/CD by env vars
 * New CICD with needs and optimization
+
+### 2023-11-17: Fix Federation, retention duration
+
+* Federation cluster is Ok now (all datas scraped)
+* Role handle now duration scraping
 
 ## Authors
 
