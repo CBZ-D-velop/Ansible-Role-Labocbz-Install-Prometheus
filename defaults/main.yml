@@ -1,5 +1,6 @@
 ---
 install_prometheus_config_path: "/etc/prometheus"
+install_prometheus_log_path: "/var/log/prometheus"
 install_prometheus_port: "9090"
 install_prometheus_host: "0.0.0.0"
 

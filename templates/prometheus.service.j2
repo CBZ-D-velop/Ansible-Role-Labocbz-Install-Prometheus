@@ -24,7 +24,8 @@ ExecStart=/bin/sh -c '/usr/bin/prometheus \
 {% if (install_prometheus_ssl | default(false)) or (install_prometheus_basic_auth | default(false)) %}
     --web.config.file={{ install_prometheus_config_path }}/web-config.yml \
 {% endif %}
-    --log.level={{ install_prometheus_loglevel }}'
+    --log.level={{ install_prometheus_loglevel }} \
+    > {{ install_prometheus_log_path }}/prometheus.log 2>&1'
 
 Restart=always
 

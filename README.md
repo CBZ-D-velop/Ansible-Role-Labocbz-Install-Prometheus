@@ -253,6 +253,7 @@ To run this role, you can copy the molecule/default/converge.yml playbook and ad
   tags:
     - "labocbz.install_prometheus"
   vars:
+    install_prometheus_log_path: "{{ inv_install_prometheus_log_path }}"
     install_prometheus_port: "{{ inv_install_prometheus_port }}"
     install_prometheus_host: "{{ inv_install_prometheus_host }}"
     install_prometheus_ssl_path: "{{ inv_install_prometheus_ssl_path }}"
@@ -313,6 +314,7 @@ Here you can put your change to keep a trace of your work and decisions.
 
 * Federation cluster is Ok now (all datas scraped)
 * Role handle now duration scraping
+* Role write logs into a file now insted of sysout
 
 ## Authors
 
