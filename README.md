@@ -109,6 +109,7 @@ Some vars a required to run this role:
 ```YAML
 ---
 install_prometheus_config_path: "/etc/prometheus"
+install_prometheus_log_path: "/var/log/prometheus"
 install_prometheus_port: "9090"
 install_prometheus_host: "0.0.0.0"
 
@@ -167,6 +168,7 @@ inv_prepare_host_users:
     group: "prometheus"
 
 inv_install_prometheus_config_path: "/etc/prometheus"
+inv_install_prometheus_log_path: "/var/log/prometheus"
 inv_install_prometheus_port: "9090"
 inv_install_prometheus_host: "0.0.0.0"
 
