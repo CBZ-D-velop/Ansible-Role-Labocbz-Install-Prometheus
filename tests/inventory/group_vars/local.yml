@@ -43,6 +43,7 @@ inv_install_prometheus_jobs:
 
   - name: "My Molecule instances (on SSL)"
     ssl: true
+    ca: "{{ inv_install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
     targets:
       - "molecule-local-instance-2-install-prometheus:{{ inv_install_prometheus_port }}"
       - "molecule-local-instance-3-install-prometheus:{{ inv_install_prometheus_port }}"
