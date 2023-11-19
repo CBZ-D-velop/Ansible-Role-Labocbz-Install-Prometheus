@@ -35,6 +35,7 @@ install_prometheus_jobs:
     basic_auth_login: "admin"
     basic_auth_password: "admin"
     ssl: true
+    ca: "{{ install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
     targets:
       - "my.prom-1.instance.domain.tld:{{ install_prometheus_port }}"
       - "my.prom-2.instance.domain.tld:{{ install_prometheus_port }}"
