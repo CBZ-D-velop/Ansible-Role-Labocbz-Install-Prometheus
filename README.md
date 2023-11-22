@@ -109,6 +109,7 @@ Some vars a required to run this role:
 ```YAML
 ---
 install_prometheus_config_path: "/etc/prometheus"
+install_prometheus_log_path: "/var/log/prometheus"
 install_prometheus_port: "9090"
 install_prometheus_host: "0.0.0.0"
 
@@ -129,6 +130,7 @@ install_prometheus_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hG
 
 install_prometheus_clustername: "my-prometheus-cluster.domain.tld"
 install_prometheus_instancename: "prom-1"
+install_prometheus_retention_time: "1y"
 
 install_prometheus_federate_collector_hosts:
   - "my.prom.instance.domain.tld:9090"
@@ -142,6 +144,7 @@ install_prometheus_jobs:
     basic_auth_login: "admin"
     basic_auth_password: "admin"
     ssl: true
+    ca: "{{ install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
     targets:
       - "my.prom-1.instance.domain.tld:{{ install_prometheus_port }}"
       - "my.prom-2.instance.domain.tld:{{ install_prometheus_port }}"
@@ -166,6 +169,7 @@ inv_prepare_host_users:
     group: "prometheus"
 
 inv_install_prometheus_config_path: "/etc/prometheus"
+inv_install_prometheus_log_path: "/var/log/prometheus"
 inv_install_prometheus_port: "9090"
 inv_install_prometheus_host: "0.0.0.0"
 
@@ -186,6 +190,7 @@ inv_install_prometheus_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuM
 
 inv_install_prometheus_clustername: "my-prometheus-cluster.domain.tld"
 inv_install_prometheus_instancename: "prom-1"
+inv_install_prometheus_retention_time: "1y"
 
 inv_install_prometheus_federate_collector_interval: "15s"
 
@@ -195,6 +200,7 @@ inv_install_prometheus_jobs:
     basic_auth_login: "admin"
     basic_auth_password: "admin"
     ssl: true
+    ca: "{{ inv_install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
     targets:
       - "molecule-local-instance-2-install-prometheus:{{ inv_install_prometheus_port }}"
       - "molecule-local-instance-3-install-prometheus:{{ inv_install_prometheus_port }}"
@@ -251,6 +257,7 @@ To run this role, you can copy the molecule/default/converge.yml playbook and ad
   tags:
     - "labocbz.install_prometheus"
   vars:
+    install_prometheus_log_path: "{{ inv_install_prometheus_log_path }}"
     install_prometheus_port: "{{ inv_install_prometheus_port }}"
     install_prometheus_host: "{{ inv_install_prometheus_host }}"
     install_prometheus_ssl_path: "{{ inv_install_prometheus_ssl_path }}"
@@ -265,7 +272,9 @@ To run this role, you can copy the molecule/default/converge.yml playbook and ad
     install_prometheus_basic_auth_login: "{{ inv_install_prometheus_basic_auth_login }}"
     install_prometheus_basic_auth_password: "{{ inv_install_prometheus_basic_auth_password }}"
     install_prometheus_basic_auth_password_hash: "{{ inv_install_prometheus_basic_auth_password_hash }}"
-    install_prometheus_instancename: "{{ inv_install_prometheus_clustername }}"
+    install_prometheus_instancename: "{{ inv_install_prometheus_instancename }}"
+    install_prometheus_clustername: "{{ inv_install_prometheus_clustername }}"
+    install_prometheus_retention_time: "{{ inv_install_prometheus_retention_time }}"
     install_prometheus_federate_collector_interval: "{{ inv_install_prometheus_federate_collector_interval }}"
     install_prometheus_jobs: "{{ inv_install_prometheus_jobs }}"
   ansible.builtin.include_role:
@@ -304,6 +313,12 @@ Here you can put your change to keep a trace of your work and decisions.
 * Molecule now use remote Docker image by Lord Robin Crombez
 * Molecule now use custom Docker image in CI/CD by env vars
 * New CICD with needs and optimization
+
+### 2023-11-17: Fix Federation, retention duration
+
+* Federation cluster is Ok now (all datas scraped)
+* Role handle now duration scraping
+* Role write logs into a file now insted of sysout
 
 ## Authors
 

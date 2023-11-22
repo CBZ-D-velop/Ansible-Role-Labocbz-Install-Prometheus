@@ -48,6 +48,17 @@
         owner: "{{ install_prometheus_user }}"
         mode: "0700"
 
+    - name: "Create log path"
+      register: output
+      changed_when: output.size < 0
+      ansible.builtin.file:
+        path: "{{ install_prometheus_log_path }}"
+        state: directory
+        recurse: yes
+        group: "{{ install_prometheus_group }}"
+        owner: "{{ install_prometheus_user }}"
+        mode: "0700"
+
     - name: "Check Promeheus YAML file"
       ansible.builtin.command: "/usr/bin/promtool check config {{ install_prometheus_config_path }}/prometheus.yml"
       register: check_conf

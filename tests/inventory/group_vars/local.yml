@@ -4,6 +4,8 @@ inv_prepare_host_users:
     group: "prometheus"
 
 inv_install_prometheus_config_path: "/etc/prometheus"
+inv_install_prometheus_log_path: "/var/log/prometheus"
+inv_install_prometheus_retention_time: "1y"
 inv_install_prometheus_port: "9090"
 inv_install_prometheus_host: "0.0.0.0"
 
@@ -33,6 +35,7 @@ inv_install_prometheus_jobs:
     basic_auth_login: "admin"
     basic_auth_password: "admin"
     ssl: true
+    ca: "{{ inv_install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
     targets:
       - "molecule-local-instance-2-install-prometheus:{{ inv_install_prometheus_port }}"
       - "molecule-local-instance-3-install-prometheus:{{ inv_install_prometheus_port }}"
@@ -40,6 +43,7 @@ inv_install_prometheus_jobs:
 
   - name: "My Molecule instances (on SSL)"
     ssl: true
+    ca: "{{ inv_install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
     targets:
       - "molecule-local-instance-2-install-prometheus:{{ inv_install_prometheus_port }}"
       - "molecule-local-instance-3-install-prometheus:{{ inv_install_prometheus_port }}"

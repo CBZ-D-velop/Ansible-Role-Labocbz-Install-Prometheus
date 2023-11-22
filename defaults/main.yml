@@ -1,5 +1,6 @@
 ---
 install_prometheus_config_path: "/etc/prometheus"
+install_prometheus_log_path: "/var/log/prometheus"
 install_prometheus_port: "9090"
 install_prometheus_host: "0.0.0.0"
 
@@ -20,6 +21,7 @@ install_prometheus_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hG
 
 install_prometheus_clustername: "my-prometheus-cluster.domain.tld"
 install_prometheus_instancename: "prom-1"
+install_prometheus_retention_time: "1y"
 
 install_prometheus_federate_collector_hosts:
   - "my.federate-prom.instance.domain.tld:{{ install_prometheus_port }}"
@@ -33,6 +35,7 @@ install_prometheus_jobs:
     basic_auth_login: "admin"
     basic_auth_password: "admin"
     ssl: true
+    ca: "{{ install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
     targets:
       - "my.prom-1.instance.domain.tld:{{ install_prometheus_port }}"
       - "my.prom-2.instance.domain.tld:{{ install_prometheus_port }}"

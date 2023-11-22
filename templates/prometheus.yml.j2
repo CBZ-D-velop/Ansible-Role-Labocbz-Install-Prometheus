@@ -58,7 +58,7 @@ scrape_configs:
     metrics_path: "/federate"
     params:
       "match[]":
-        - "{job='*'}"
+        - '{__name__=~".+"}'
     static_configs:
       - targets: 
 {% for host in install_prometheus_federate_collector_hosts %}
@@ -91,7 +91,7 @@ scrape_configs:
 {% if job.ssl | default(false) %}
     scheme: "https"
     tls_config:
-      ca_file: "{{ install_prometheus_ssl_ca }}"
+      ca_file: "{{ job.ca }}"
 {% endif %}
 {% if job.basic_auth | default(false) %}
     basic_auth:
