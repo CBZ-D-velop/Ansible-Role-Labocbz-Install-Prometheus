@@ -1,6 +1,6 @@
 ---
-inv_prepare_host_users:
-  - login: "root"
+inv_prepare_host_system_users:
+  - login: "prometheus"
     group: "prometheus"
 
 inv_install_prometheus_config_path: "/etc/prometheus"
