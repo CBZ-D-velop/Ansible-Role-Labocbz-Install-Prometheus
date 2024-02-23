@@ -8,9 +8,9 @@ driver:
   name: "docker"
 
 platforms:
-  - name: "molecule-cicd-debian-11-instance-1-prepare-host"
-    image: "${NEXUS_REPOS_DOCKER_REGISTRY}/${DOCKER_IMAGE_DEBIAN_11_ANSIBLE}"
-    hostname: "molecule-cicd-debian-11-instance-1-prepare-host"
+  - name: "molecule-cicd-debian-12-instance-1-prepare-host"
+    image: "${NEXUS_REPOS_DOCKER_REGISTRY}/${DOCKER_IMAGE_DEBIAN_12_ANSIBLE}"
+    hostname: "molecule-cicd-debian-12-instance-1-prepare-host"
     privileged: true
     pre_build_image: true
     command: "/sbin/init"
@@ -23,11 +23,11 @@ platforms:
     cgroup_manager: "cgroupfs"
     storage_driver: "overlay2"
     networks:
-      - name: "molecule-cicd-debian-11-prepare-host"
+      - name: "molecule-cicd-debian-12-prepare-host"
 
-  - name: "molecule-cicd-debian-11-instance-2-prepare-host"
-    image: "${NEXUS_REPOS_DOCKER_REGISTRY}/${DOCKER_IMAGE_DEBIAN_11_ANSIBLE}"
-    hostname: "molecule-cicd-debian-11-instance-2-prepare-host"
+  - name: "molecule-cicd-debian-12-instance-2-prepare-host"
+    image: "${NEXUS_REPOS_DOCKER_REGISTRY}/${DOCKER_IMAGE_DEBIAN_12_ANSIBLE}"
+    hostname: "molecule-cicd-debian-12-instance-2-prepare-host"
     privileged: true
     pre_build_image: true
     command: "/sbin/init"
@@ -40,7 +40,7 @@ platforms:
     cgroup_manager: "cgroupfs"
     storage_driver: "overlay2"
     networks:
-      - name: "molecule-cicd-debian-11-prepare-host"
+      - name: "molecule-cicd-debian-12-prepare-host"
 
 provisioner:
   name: "ansible"
@@ -68,7 +68,7 @@ verifier:
   name: "ansible"
 
 scenario:
-  name: "cicd-debian-11"
+  name: "cicd-debian-12"
   test_sequence:
     - "destroy"
     - "syntax"

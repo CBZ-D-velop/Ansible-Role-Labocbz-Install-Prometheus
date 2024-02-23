@@ -1,4 +1,0 @@
----
-ansible_ssh_port: 22
-
-install_prometheus_instancename: "prom-4"

@@ -12,7 +12,7 @@
       ansible.builtin.template:
         src: "templates/prometheus.service.j2"
         dest: "/etc/systemd/system/prometheus.service"
-        mode: "0700"
+        mode: "0600"
         group: "root"
         owner: "root"
         lstrip_blocks: yes
@@ -23,44 +23,44 @@
     - name: "Import Prometheus configuration file"
       ansible.builtin.template:
         src: "templates/prometheus.yml.j2"
-        dest: "{{ install_prometheus_config_path }}/prometheus.yml"
+        dest: "{{ install_prometheus__config_path }}/prometheus.yml"
         mode: "0700"
-        group: "{{ install_prometheus_group }}"
-        owner: "{{ install_prometheus_user }}"
+        group: "{{ install_prometheus__group }}"
+        owner: "{{ install_prometheus__user }}"
         lstrip_blocks: yes
 
     - name: "Import Prometheus web configuration file"
-      when: (install_prometheus_ssl | default(false)) or (install_prometheus_basic_auth | default(false))
+      when: (install_prometheus__ssl | default(false)) or (install_prometheus__basic_auth | default(false))
       ansible.builtin.template:
         src: "templates/web-config.yml.j2"
-        dest: "{{ install_prometheus_config_path }}/web-config.yml"
+        dest: "{{ install_prometheus__config_path }}/web-config.yml"
         mode: "0700"
-        group: "{{ install_prometheus_group }}"
-        owner: "{{ install_prometheus_user }}"
+        group: "{{ install_prometheus__group }}"
+        owner: "{{ install_prometheus__user }}"
         lstrip_blocks: yes
 
     - name: "Apply permissions on Prometheus scrapes dir"
       ansible.builtin.file:
-        path: "{{ install_prometheus_config_path }}"
+        path: "{{ install_prometheus__config_path }}"
         state: directory
         recurse: yes
-        group: "{{ install_prometheus_group }}"
-        owner: "{{ install_prometheus_user }}"
+        group: "{{ install_prometheus__group }}"
+        owner: "{{ install_prometheus__user }}"
         mode: "0700"
 
     - name: "Create log path"
       register: output
       changed_when: output.size < 0
       ansible.builtin.file:
-        path: "{{ install_prometheus_log_path }}"
+        path: "{{ install_prometheus__log_path }}"
         state: directory
         recurse: yes
-        group: "{{ install_prometheus_group }}"
-        owner: "{{ install_prometheus_user }}"
+        group: "{{ install_prometheus__group }}"
+        owner: "{{ install_prometheus__user }}"
         mode: "0700"
 
     - name: "Check Promeheus YAML file"
-      ansible.builtin.command: "/usr/bin/promtool check config {{ install_prometheus_config_path }}/prometheus.yml"
       register: check_conf
       changed_when: check_conf.stdout == ""
       failed_when: check_conf.rc != 0
+      ansible.builtin.command: "/usr/bin/promtool check config {{ install_prometheus__config_path }}/prometheus.yml"
