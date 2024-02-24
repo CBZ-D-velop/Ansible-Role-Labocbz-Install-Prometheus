@@ -8,9 +8,9 @@ driver:
   name: "docker"
 
 platforms:
-  - name: "molecule-cicd-debian-11-instance-1-add_certificates__"
+  - name: "molecule-cicd-debian-11-instance-1-install-prometheus"
     image: "${NEXUS_REPOS_DOCKER_REGISTRY}/${DOCKER_IMAGE_DEBIAN_11_ANSIBLE}"
-    hostname: "molecule-cicd-debian-11-instance-1-add_certificates__"
+    hostname: "molecule-cicd-debian-11-instance-1-install-prometheus"
     privileged: true
     pre_build_image: true
     command: "/sbin/init"
@@ -23,11 +23,11 @@ platforms:
     cgroup_manager: "cgroupfs"
     storage_driver: "overlay2"
     networks:
-      - name: "molecule-cicd-debian-11-add_certificates__"
+      - name: "molecule-cicd-debian-11-install-prometheus"
 
-  - name: "molecule-cicd-debian-11-instance-2-add_certificates__"
+  - name: "molecule-cicd-debian-11-instance-2-install-prometheus"
     image: "${NEXUS_REPOS_DOCKER_REGISTRY}/${DOCKER_IMAGE_DEBIAN_11_ANSIBLE}"
-    hostname: "molecule-cicd-debian-11-instance-2-add_certificates__"
+    hostname: "molecule-cicd-debian-11-instance-2-install-prometheus"
     privileged: true
     pre_build_image: true
     command: "/sbin/init"
@@ -40,7 +40,7 @@ platforms:
     cgroup_manager: "cgroupfs"
     storage_driver: "overlay2"
     networks:
-      - name: "molecule-cicd-debian-11-add_certificates__"
+      - name: "molecule-cicd-debian-11-install-prometheus"
 
 provisioner:
   name: "ansible"
