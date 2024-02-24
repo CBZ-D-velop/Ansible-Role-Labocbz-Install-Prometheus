@@ -11,21 +11,21 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-User={{ install_prometheus_user }}
-Group={{ install_prometheus_group }}
+User={{ install_prometheus__user }}
+Group={{ install_prometheus__group }}
 Type=simple
 ExecStart=/bin/sh -c '/usr/bin/prometheus \
-    --config.file {{ install_prometheus_config_path }}/prometheus.yml \
+    --config.file {{ install_prometheus__config_path }}/prometheus.yml \
     --storage.tsdb.path /var/lib/prometheus/ \
-    --web.console.templates={{ install_prometheus_config_path }}/consoles \
-    --web.console.libraries={{ install_prometheus_config_path }}/console_libraries \
-    --web.listen-address="{{ install_prometheus_host }}:{{ install_prometheus_port }}" \
-    --storage.tsdb.retention.time={{ install_prometheus_retention_time }} \
-{% if (install_prometheus_ssl | default(false)) or (install_prometheus_basic_auth | default(false)) %}
-    --web.config.file={{ install_prometheus_config_path }}/web-config.yml \
+    --web.console.templates={{ install_prometheus__config_path }}/consoles \
+    --web.console.libraries={{ install_prometheus__config_path }}/console_libraries \
+    --web.listen-address="{{ install_prometheus__host }}:{{ install_prometheus__port }}" \
+    --storage.tsdb.retention.time={{ install_prometheus__retention_time }} \
+{% if (install_prometheus__ssl | default(false)) or (install_prometheus__basic_auth | default(false)) %}
+    --web.config.file={{ install_prometheus__config_path }}/web-config.yml \
 {% endif %}
-    --log.level={{ install_prometheus_loglevel }} \
-    > {{ install_prometheus_log_path }}/prometheus.log 2>&1'
+    --log.level={{ install_prometheus__loglevel }} \
+    > {{ install_prometheus__log_path }}/prometheus.log 2>&1'
 
 Restart=always
 

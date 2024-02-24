@@ -108,50 +108,50 @@ Some vars a required to run this role:
 
 ```YAML
 ---
-install_prometheus_config_path: "/etc/prometheus"
-install_prometheus_log_path: "/var/log/prometheus"
-install_prometheus_port: "9090"
-install_prometheus_host: "0.0.0.0"
+install_prometheus__config_path: "/etc/prometheus"
+install_prometheus__log_path: "/var/log/prometheus"
+install_prometheus__port: "9090"
+install_prometheus__host: "0.0.0.0"
 
-install_prometheus_ssl_path: "{{ install_prometheus_config_path }}/ssl"
-install_prometheus_scrape_interval: "10s"
-install_prometheus_evaluation_interval: "10s"
-install_prometheus_loglevel: "debug"
+install_prometheus__ssl_path: "{{ install_prometheus__config_path }}/ssl"
+install_prometheus__scrape_interval: "10s"
+install_prometheus__evaluation_interval: "10s"
+install_prometheus__loglevel: "debug"
 
-install_prometheus_ssl: true
-install_prometheus_ssl_key: "{{ install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/my-prometheus-cluster.domain.tld.pem.key"
-install_prometheus_ssl_crt: "{{ install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/my-prometheus-cluster.domain.tld.pem.crt"
-install_prometheus_ssl_ca: "{{ install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
+install_prometheus__ssl: true
+install_prometheus__ssl_key: "{{ install_prometheus__ssl_path }}/my-prometheus-cluster.domain.tld/my-prometheus-cluster.domain.tld.pem.key"
+install_prometheus__ssl_crt: "{{ install_prometheus__ssl_path }}/my-prometheus-cluster.domain.tld/my-prometheus-cluster.domain.tld.pem.crt"
+install_prometheus__ssl_ca: "{{ install_prometheus__ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
 
-install_prometheus_basic_auth: true
-install_prometheus_basic_auth_login: "admin"
-install_prometheus_basic_auth_password: "admin"
-install_prometheus_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hGkkNOcxLtLRWV6nfSZWfonGb69W"
+install_prometheus__basic_auth: true
+install_prometheus__basic_auth_login: "admin"
+install_prometheus__basic_auth_password: "admin"
+install_prometheus__basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hGkkNOcxLtLRWV6nfSZWfonGb69W"
 
-install_prometheus_clustername: "my-prometheus-cluster.domain.tld"
-install_prometheus_instancename: "prom-1"
-install_prometheus_retention_time: "1y"
+install_prometheus__clustername: "my-prometheus-cluster.domain.tld"
+install_prometheus__instancename: "prom-1"
+install_prometheus__retention_time: "1y"
 
-install_prometheus_federate_collector_hosts:
+install_prometheus__federate_collector_hosts:
   - "my.prom.instance.domain.tld:9090"
 
-install_prometheus_federate_collector: false
-install_prometheus_federate_collector_interval: "5s"
+install_prometheus__federate_collector: false
+install_prometheus__federate_collector_interval: "5s"
 
-install_prometheus_jobs:
+install_prometheus__jobs:
   - name: "My Prom instances"
     basic_auth: true
     basic_auth_login: "admin"
     basic_auth_password: "admin"
     ssl: true
-    ca: "{{ install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
+    ca: "{{ install_prometheus__ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
     targets:
-      - "my.prom-1.instance.domain.tld:{{ install_prometheus_port }}"
-      - "my.prom-2.instance.domain.tld:{{ install_prometheus_port }}"
-      - "my.prom-3.instance.domain.tld:{{ install_prometheus_port }}"
+      - "my.prom-1.instance.domain.tld:{{ install_prometheus__port }}"
+      - "my.prom-2.instance.domain.tld:{{ install_prometheus__port }}"
+      - "my.prom-3.instance.domain.tld:{{ install_prometheus__port }}"
 
-install_prometheus_group: "prometheus"
-install_prometheus_user: "prometheus"
+install_prometheus__group: "prometheus"
+install_prometheus__user: "prometheus"
 
 ```
 
@@ -164,81 +164,81 @@ In order to surchage vars, you have multiples possibilities but for mains cases 
 ```YAML
 # From inventory
 ---
-inv_prepare_host_users:
+inv_prepare_host__users:
   - login: "root"
     group: "prometheus"
 
-inv_install_prometheus_config_path: "/etc/prometheus"
-inv_install_prometheus_log_path: "/var/log/prometheus"
-inv_install_prometheus_port: "9090"
-inv_install_prometheus_host: "0.0.0.0"
+inv_install_prometheus__config_path: "/etc/prometheus"
+inv_install_prometheus__log_path: "/var/log/prometheus"
+inv_install_prometheus__port: "9090"
+inv_install_prometheus__host: "0.0.0.0"
 
-inv_install_prometheus_ssl_path: "{{ inv_install_prometheus_config_path }}/ssl"
-inv_install_prometheus_scrape_interval: "5s"
-inv_install_prometheus_evaluation_interval: "1s"
-inv_install_prometheus_loglevel: "debug"
+inv_install_prometheus__ssl_path: "{{ inv_install_prometheus__config_path }}/ssl"
+inv_install_prometheus__scrape_interval: "5s"
+inv_install_prometheus__evaluation_interval: "1s"
+inv_install_prometheus__loglevel: "debug"
 
-inv_install_prometheus_ssl: true
-inv_install_prometheus_ssl_key: "{{ inv_install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/my-prometheus-cluster.domain.tld.pem.key"
-inv_install_prometheus_ssl_crt: "{{ inv_install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/my-prometheus-cluster.domain.tld.pem.crt"
-inv_install_prometheus_ssl_ca: "{{ inv_install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
+inv_install_prometheus__ssl: true
+inv_install_prometheus__ssl_key: "{{ inv_install_prometheus__ssl_path }}/my-prometheus-cluster.domain.tld/my-prometheus-cluster.domain.tld.pem.key"
+inv_install_prometheus__ssl_crt: "{{ inv_install_prometheus__ssl_path }}/my-prometheus-cluster.domain.tld/my-prometheus-cluster.domain.tld.pem.crt"
+inv_install_prometheus__ssl_ca: "{{ inv_install_prometheus__ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
 
-inv_install_prometheus_basic_auth: true
-inv_install_prometheus_basic_auth_login: "admin"
-inv_install_prometheus_basic_auth_password: "admin"
-inv_install_prometheus_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hGkkNOcxLtLRWV6nfSZWfonGb69W"
+inv_install_prometheus__basic_auth: true
+inv_install_prometheus__basic_auth_login: "admin"
+inv_install_prometheus__basic_auth_password: "admin"
+inv_install_prometheus__basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hGkkNOcxLtLRWV6nfSZWfonGb69W"
 
-inv_install_prometheus_clustername: "my-prometheus-cluster.domain.tld"
-inv_install_prometheus_instancename: "prom-1"
-inv_install_prometheus_retention_time: "1y"
+inv_install_prometheus__clustername: "my-prometheus-cluster.domain.tld"
+inv_install_prometheus__instancename: "prom-1"
+inv_install_prometheus__retention_time: "1y"
 
-inv_install_prometheus_federate_collector_interval: "15s"
+inv_install_prometheus__federate_collector_interval: "15s"
 
-inv_install_prometheus_jobs:
+inv_install_prometheus__jobs:
   - name: "My Molecule instances (on SSL + Auth)"
     basic_auth: true
     basic_auth_login: "admin"
     basic_auth_password: "admin"
     ssl: true
-    ca: "{{ inv_install_prometheus_ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
+    ca: "{{ inv_install_prometheus__ssl_path }}/my-prometheus-cluster.domain.tld/ca-chain.pem.crt"
     targets:
-      - "molecule-local-instance-2-install-prometheus:{{ inv_install_prometheus_port }}"
-      - "molecule-local-instance-3-install-prometheus:{{ inv_install_prometheus_port }}"
-      - "molecule-local-instance-4-install-prometheus:{{ inv_install_prometheus_port }}"
+      - "molecule-local-instance-2-install-prometheus:{{ inv_install_prometheus__port }}"
+      - "molecule-local-instance-3-install-prometheus:{{ inv_install_prometheus__port }}"
+      - "molecule-local-instance-4-install-prometheus:{{ inv_install_prometheus__port }}"
 
   - name: "My Molecule instances (on SSL)"
     ssl: true
     targets:
-      - "molecule-local-instance-2-install-prometheus:{{ inv_install_prometheus_port }}"
-      - "molecule-local-instance-3-install-prometheus:{{ inv_install_prometheus_port }}"
-      - "molecule-local-instance-4-install-prometheus:{{ inv_install_prometheus_port }}"
+      - "molecule-local-instance-2-install-prometheus:{{ inv_install_prometheus__port }}"
+      - "molecule-local-instance-3-install-prometheus:{{ inv_install_prometheus__port }}"
+      - "molecule-local-instance-4-install-prometheus:{{ inv_install_prometheus__port }}"
 
   - name: "My Molecule instances (on Auth)"
     basic_auth: true
     basic_auth_login: "admin"
     basic_auth_password: "admin"
     targets:
-      - "molecule-local-instance-2-install-prometheus:{{ inv_install_prometheus_port }}"
-      - "molecule-local-instance-3-install-prometheus:{{ inv_install_prometheus_port }}"
-      - "molecule-local-instance-4-install-prometheus:{{ inv_install_prometheus_port }}"
+      - "molecule-local-instance-2-install-prometheus:{{ inv_install_prometheus__port }}"
+      - "molecule-local-instance-3-install-prometheus:{{ inv_install_prometheus__port }}"
+      - "molecule-local-instance-4-install-prometheus:{{ inv_install_prometheus__port }}"
 
   - name: "My Molecule instances"
     targets:
-      - "molecule-local-instance-2-install-prometheus:{{ inv_install_prometheus_port }}"
-      - "molecule-local-instance-3-install-prometheus:{{ inv_install_prometheus_port }}"
-      - "molecule-local-instance-4-install-prometheus:{{ inv_install_prometheus_port }}"
+      - "molecule-local-instance-2-install-prometheus:{{ inv_install_prometheus__port }}"
+      - "molecule-local-instance-3-install-prometheus:{{ inv_install_prometheus__port }}"
+      - "molecule-local-instance-4-install-prometheus:{{ inv_install_prometheus__port }}"
 
 # From SCRAPER / Cluster / Federator
 ---
 
-install_prometheus_instancename: "prom-1"
+install_prometheus__instancename: "prom-1"
 
-install_prometheus_federate_collector_hosts:
+install_prometheus__federate_collector_hosts:
   - "molecule-local-instance-2-install-prometheus"
   - "molecule-local-instance-3-install-prometheus"
   - "molecule-local-instance-4-install-prometheus"
 
-install_prometheus_federate_collector: true
+install_prometheus__federate_collector: true
 
 ```
 
@@ -257,26 +257,26 @@ To run this role, you can copy the molecule/default/converge.yml playbook and ad
   tags:
     - "labocbz.install_prometheus"
   vars:
-    install_prometheus_log_path: "{{ inv_install_prometheus_log_path }}"
-    install_prometheus_port: "{{ inv_install_prometheus_port }}"
-    install_prometheus_host: "{{ inv_install_prometheus_host }}"
-    install_prometheus_ssl_path: "{{ inv_install_prometheus_ssl_path }}"
-    install_prometheus_scrape_interval: "{{ inv_install_prometheus_scrape_interval }}"
-    install_prometheus_evaluation_interval: "{{ inv_install_prometheus_evaluation_interval }}"
-    install_prometheus_loglevel: "{{ inv_install_prometheus_loglevel }}"
-    install_prometheus_ssl: "{{ inv_install_prometheus_ssl }}"
-    install_prometheus_ssl_key: "{{ inv_install_prometheus_ssl_key }}"
-    install_prometheus_ssl_crt: "{{ inv_install_prometheus_ssl_crt }}"
-    install_prometheus_ssl_ca: "{{ inv_install_prometheus_ssl_ca }}"
-    install_prometheus_basic_auth: "{{ inv_install_prometheus_basic_auth }}"
-    install_prometheus_basic_auth_login: "{{ inv_install_prometheus_basic_auth_login }}"
-    install_prometheus_basic_auth_password: "{{ inv_install_prometheus_basic_auth_password }}"
-    install_prometheus_basic_auth_password_hash: "{{ inv_install_prometheus_basic_auth_password_hash }}"
-    install_prometheus_instancename: "{{ inv_install_prometheus_instancename }}"
-    install_prometheus_clustername: "{{ inv_install_prometheus_clustername }}"
-    install_prometheus_retention_time: "{{ inv_install_prometheus_retention_time }}"
-    install_prometheus_federate_collector_interval: "{{ inv_install_prometheus_federate_collector_interval }}"
-    install_prometheus_jobs: "{{ inv_install_prometheus_jobs }}"
+    install_prometheus__log_path: "{{ inv_install_prometheus__log_path }}"
+    install_prometheus__port: "{{ inv_install_prometheus__port }}"
+    install_prometheus__host: "{{ inv_install_prometheus__host }}"
+    install_prometheus__ssl_path: "{{ inv_install_prometheus__ssl_path }}"
+    install_prometheus__scrape_interval: "{{ inv_install_prometheus__scrape_interval }}"
+    install_prometheus__evaluation_interval: "{{ inv_install_prometheus__evaluation_interval }}"
+    install_prometheus__loglevel: "{{ inv_install_prometheus__loglevel }}"
+    install_prometheus__ssl: "{{ inv_install_prometheus__ssl }}"
+    install_prometheus__ssl_key: "{{ inv_install_prometheus__ssl_key }}"
+    install_prometheus__ssl_crt: "{{ inv_install_prometheus__ssl_crt }}"
+    install_prometheus__ssl_ca: "{{ inv_install_prometheus__ssl_ca }}"
+    install_prometheus__basic_auth: "{{ inv_install_prometheus__basic_auth }}"
+    install_prometheus__basic_auth_login: "{{ inv_install_prometheus__basic_auth_login }}"
+    install_prometheus__basic_auth_password: "{{ inv_install_prometheus__basic_auth_password }}"
+    install_prometheus__basic_auth_password_hash: "{{ inv_install_prometheus__basic_auth_password_hash }}"
+    install_prometheus__instancename: "{{ inv_install_prometheus__instancename }}"
+    install_prometheus__clustername: "{{ inv_install_prometheus__clustername }}"
+    install_prometheus__retention_time: "{{ inv_install_prometheus__retention_time }}"
+    install_prometheus__federate_collector_interval: "{{ inv_install_prometheus__federate_collector_interval }}"
+    install_prometheus__jobs: "{{ inv_install_prometheus__jobs }}"
   ansible.builtin.include_role:
     name: "labocbz.install_prometheus"
 ```
@@ -319,6 +319,15 @@ Here you can put your change to keep a trace of your work and decisions.
 * Federation cluster is Ok now (all datas scraped)
 * Role handle now duration scraping
 * Role write logs into a file now insted of sysout
+
+### 2024-02-22: New CICD and fixes
+
+* Added support for Ubuntu 22
+* Added support for Debian 11/22
+* Edited vars for linting (role name and __)
+* Fix idempotency
+* New CI, need work on tag and releases
+* CI use now Sonarqube
 
 ## Authors
 
